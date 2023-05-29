@@ -126,3 +126,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Google OAuth Credentials
+CLIENT_ID = '579798675030-p0pb41o120f4prb5219s7v5sgrjdnv8u.apps.googleusercontent.com'
+CLIENT_SECRET = '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'
+REDIRECT_URI = 'http://localhost:8000/rest/v1/calendar/redirect/'

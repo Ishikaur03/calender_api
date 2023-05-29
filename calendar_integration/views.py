@@ -14,7 +14,6 @@ from google.auth.transport.requests import Request
 
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
-
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 
 class GoogleCalendarInitView(View):
@@ -42,7 +41,7 @@ class GoogleCalendarRedirectView(View):
         )
         flow.fetch_token(authorization_response=request.build_absolute_uri())
         credentials = flow.credentials
-        
+
 
         if credentials.refresh_token is None:
             credentials.refresh(Request())
@@ -52,6 +51,49 @@ class GoogleCalendarRedirectView(View):
         events = events_result.get('items', [])
 
         return HttpResponse(events)
+
+
+
+
+    # def get(self, request):
+    #     # Verify the state parameter
+    #     if 'oauth_state' not in request.session or request.GET.get('state') != request.session['oauth_state']:
+    #         return HttpResponse('Invalid state parameter.', status=400)
+
+    #     # Exchange the authorization code for an access token
+    #     code = request.GET.get('code')
+    #     if not code:
+    #         return HttpResponse('Missing code parameter.', status=400)
+
+    #     token_url = 'https://accounts.google.com/o/oauth2/token'
+    #     payload = {
+    #         'code': code,
+    #         'client_id': settings.CLIENT_ID,
+    #         'client_secret': settings.CLIENT_SECRET,
+    #         'redirect_uri': settings.REDIRECT_URI,
+    #         'grant_type': 'authorization_code'
+    #     }
+    #     response = requests.post(token_url, data=payload)
+
+    #     if response.status_code == 200:
+    #         # Extract the access token from the response
+    #         access_token = response.json().get('access_token')
+
+    #         # Use the access token to get the list of events in the user's calendar
+    #         events_url = 'https://www.googleapis.com/calendar/v3/events'
+    #         headers = {'Authorization': f'Bearer {access_token}'}
+    #         response = requests.get(events_url, headers=headers)
+
+    #         if response.status_code == 200:
+    #             # Process the events data
+    #             events_data = response.json()
+    #             # ... process events_data as needed ...
+    #             return HttpResponse('Events retrieved successfully.')
+    #         else:
+    #             return HttpResponse('Failed to fetch events from Google Calendar.', status=400)
+    #     else:
+    #         return HttpResponse('Failed to exchange authorization code for access token.', status=400)
+
 
 
 # #calendar_integration/views.py
@@ -81,25 +123,25 @@ class GoogleCalendarRedirectView(View):
 #         return redirect(authorization_url)
 
 # class GoogleCalendarRedirectView(View):
-#     def get(self, request):
-#         flow = Flow.from_client_secrets_file(
-#             CREDENTIALS_FILE,
-#             scopes=[SCOPE],
-#             redirect_uri=REDIRECT_URI
-#         )
-#         flow.fetch_token(
-#             authorization_response=request.build_absolute_uri(),
-#         )
+    # def get(self, request):
+    #     flow = Flow.from_client_secrets_file(
+    #         CREDENTIALS_FILE,
+    #         scopes=[SCOPE],
+    #         redirect_uri=REDIRECT_URI
+    #     )
+    #     flow.fetch_token(
+    #         authorization_response=request.build_absolute_uri(),
+    #     )
 
-#         credentials_dict = flow.credentials
-#         access_token = credentials_dict.token
+    #     credentials_dict = flow.credentials
+    #     access_token = credentials_dict.token
 
-#         service = googleapiclient.discovery.build('calendar', 'v3', credentials=credentials.Credentials.from_authorized_user_info(credentials_dict))
+    #     service = googleapiclient.discovery.build('calendar', 'v3', credentials=credentials.Credentials.from_authorized_user_info(credentials_dict))
 
-#         events_result = service.events().list(calendarId='primary', maxResults=10).execute()
-#         events = events_result.get('items', [])
+    #     events_result = service.events().list(calendarId='primary', maxResults=10).execute()
+    #     events = events_result.get('items', [])
 
-#         # Process the fetched events as per your requirement
-#         # ...
+    #     # Process the fetched events as per your requirement
+    #     # ...
 
-#         return HttpResponse('Events fetched successfully')
+    #     return HttpResponse('Events fetched successfully')
