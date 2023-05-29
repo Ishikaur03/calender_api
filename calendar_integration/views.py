@@ -42,6 +42,7 @@ class GoogleCalendarRedirectView(View):
         )
         flow.fetch_token(authorization_response=request.build_absolute_uri())
         credentials = flow.credentials
+        
 
         if credentials.refresh_token is None:
             credentials.refresh(Request())
