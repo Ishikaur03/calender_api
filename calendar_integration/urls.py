@@ -6,7 +6,7 @@ app_name = 'calendar_integration'
 
 urlpatterns = [
     path('init/', GoogleCalendarInitView.as_view(), name='calendar_init'),
-     path('redirect/', GoogleCalendarRedirectView.as_view(), name='calendar_redirect'),
+    path('redirect/', GoogleCalendarRedirectView.as_view(), name='calendar_redirect'),
     
 ]
 # from django.urls import path
