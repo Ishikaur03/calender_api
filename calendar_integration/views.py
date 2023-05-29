@@ -14,6 +14,7 @@ from google.auth.transport.requests import Request
 
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
+
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 
 class GoogleCalendarInitView(View):
@@ -39,7 +40,6 @@ class GoogleCalendarRedirectView(View):
             redirect_uri='http://localhost:8000/rest/v1/calendar/redirect/',
             state=state
         )
-        
         flow.fetch_token(authorization_response=request.build_absolute_uri())
         credentials = flow.credentials
 
