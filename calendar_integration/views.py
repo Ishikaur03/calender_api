@@ -122,26 +122,3 @@ class GoogleCalendarRedirectView(View):
 
 #         return redirect(authorization_url)
 
-# class GoogleCalendarRedirectView(View):
-    # def get(self, request):
-    #     flow = Flow.from_client_secrets_file(
-    #         CREDENTIALS_FILE,
-    #         scopes=[SCOPE],
-    #         redirect_uri=REDIRECT_URI
-    #     )
-    #     flow.fetch_token(
-    #         authorization_response=request.build_absolute_uri(),
-    #     )
-
-    #     credentials_dict = flow.credentials
-    #     access_token = credentials_dict.token
-
-    #     service = googleapiclient.discovery.build('calendar', 'v3', credentials=credentials.Credentials.from_authorized_user_info(credentials_dict))
-
-    #     events_result = service.events().list(calendarId='primary', maxResults=10).execute()
-    #     events = events_result.get('items', [])
-
-    #     # Process the fetched events as per your requirement
-    #     # ...
-
-    #     return HttpResponse('Events fetched successfully')
